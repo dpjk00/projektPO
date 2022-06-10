@@ -40,44 +40,169 @@ namespace ProjektWPF
             System.Windows.Data.CollectionViewSource uczniowieViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("uczniowieViewSource")));
             context.Uczniowies.Load();
             custViewSource.Source = context.Uczniowies.Local;
+            System.Windows.Data.CollectionViewSource przedmiotyViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("przedmiotyViewSource")));
+            System.Windows.Data.CollectionViewSource nauczycieleViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("nauczycieleViewSource")));
+            System.Windows.Data.CollectionViewSource wycieczkiViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("wycieczkiViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // przedmiotyViewSource.Source = [generic data source]
         }
 
-        private void LastCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        private void UczniowieCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            custViewSource.View.MoveCurrentToLast();
+            context.Uczniowies.Load();
+            custViewSource.Source = context.Uczniowies.Local;
+            uczniowieDataGrid.Visibility = Visibility.Visible;
+            przedmiotyDataGrid.Visibility = Visibility.Hidden;
+            nauczycieleDataGrid.Visibility = Visibility.Hidden;
+            wycieczkiDataGrid.Visibility = Visibility.Hidden;
+            uczniowieStackPanel.Visibility = Visibility.Visible;
+            nauczycieleStackPanel.Visibility = Visibility.Hidden;
+            wycieczkiStackPanel.Visibility = Visibility.Hidden;
+            przedmiotyStackPanel.Visibility = Visibility.Hidden;
         }
 
-        private void PreviousCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        private void NauczycieleCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            custViewSource.View.MoveCurrentToPrevious();
+            context.Nauczycieles.Load();
+            custViewSource.Source = context.Nauczycieles.Local;
+            uczniowieDataGrid.Visibility = Visibility.Hidden;
+            przedmiotyDataGrid.Visibility = Visibility.Hidden;
+            nauczycieleDataGrid.Visibility = Visibility.Visible;
+            wycieczkiDataGrid.Visibility = Visibility.Hidden;
+            uczniowieStackPanel.Visibility = Visibility.Hidden;
+            nauczycieleStackPanel.Visibility = Visibility.Visible;
+            wycieczkiStackPanel.Visibility = Visibility.Hidden;
+            przedmiotyStackPanel.Visibility = Visibility.Hidden;
         }
 
-        private void NextCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        private void WycieczkiCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            custViewSource.View.MoveCurrentToNext();
+            context.Wycieczkis.Load();
+            custViewSource.Source = context.Wycieczkis.Local;
+            uczniowieDataGrid.Visibility = Visibility.Hidden;
+            przedmiotyDataGrid.Visibility = Visibility.Hidden;
+            nauczycieleDataGrid.Visibility = Visibility.Hidden;
+            wycieczkiDataGrid.Visibility = Visibility.Visible;
+            uczniowieStackPanel.Visibility = Visibility.Hidden;
+            nauczycieleStackPanel.Visibility = Visibility.Hidden;
+            wycieczkiStackPanel.Visibility = Visibility.Visible;
+            przedmiotyStackPanel.Visibility = Visibility.Hidden;
         }
 
-        private void FirstCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        private void PrzedmiotyCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
-            custViewSource.View.MoveCurrentToFirst();
+            context.Przedmioties.Load();
+            custViewSource.Source = context.Przedmioties.Local;
+            uczniowieDataGrid.Visibility = Visibility.Hidden;
+            przedmiotyDataGrid.Visibility = Visibility.Visible;
+            nauczycieleDataGrid.Visibility = Visibility.Hidden;
+            wycieczkiDataGrid.Visibility = Visibility.Hidden;
+            uczniowieStackPanel.Visibility = Visibility.Hidden;
+            nauczycieleStackPanel.Visibility = Visibility.Hidden;
+            wycieczkiStackPanel.Visibility = Visibility.Hidden;
+            przedmiotyStackPanel.Visibility = Visibility.Visible;
         }
 
-        private void DeleteUczenCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        private void Delete_Uczen(object sender, RoutedEventArgs e)
         {
-            // If existing window is visible, delete the customer and all their orders.  
-            // In a real application, you should add warnings and allow the user to cancel the operation.  
+            int id = (uczniowieDataGrid.SelectedItem as Uczniowie).ID;
+            Uczniowie uczen = (from r in context.Uczniowies where r.ID == id select r).SingleOrDefault();      
+
             var cur = custViewSource.View.CurrentItem as Uczniowie;
-
             var cust = (from c in context.Uczniowies
                         where c.ID == cur.ID
                         select c).FirstOrDefault();
 
-            if (cust != null)
+            foreach (var zd in cust.ZadaniaDomowes.ToList())
             {
-                context.Uczniowies.Remove(cust);
+                context.ZadaniaDomowes.Remove(zd);
             }
+            context.Uczniowies.Remove(uczen);
             context.SaveChanges();
-            custViewSource.View.Refresh();
+            ordViewSource.View.Refresh();
+        }
+
+        private void Delete_Nauczyciel(object sender, RoutedEventArgs e)
+        {
+            int id = (uczniowieDataGrid.SelectedItem as Nauczyciele).ID;
+            Nauczyciele nauczyciel = (from r in context.Nauczycieles where r.ID == id select r).SingleOrDefault();
+
+            var cur = custViewSource.View.CurrentItem as Nauczyciele;
+            var cust = (from c in context.Nauczycieles
+                        where c.ID == cur.ID
+                        select c).FirstOrDefault();
+
+            //usuwanie z kluczów obcych
+            foreach (var zd in cust.ZadaniaDomowes.ToList())
+            {
+                context.ZadaniaDomowes.Remove(zd);
+            }
+            foreach (var p in cust.Wycieczkis.ToList())
+            {
+                context.Wycieczkis.Remove(p);
+            }
+
+            context.Nauczycieles.Remove(nauczyciel);
+            context.SaveChanges();
+            ordViewSource.View.Refresh();
+        }
+
+        private void Delete_Przedmioty(object sender, RoutedEventArgs e)
+        {
+            int id = (uczniowieDataGrid.SelectedItem as Przedmioty).ID;
+            Przedmioty przedmiot = (from r in context.Przedmioties where r.ID == id select r).SingleOrDefault();
+
+            context.Przedmioties.Remove(przedmiot);
+            context.SaveChanges();
+            ordViewSource.View.Refresh();
+        }
+
+        private void Delete_Wycieczki(object sender, RoutedEventArgs e)
+        {
+            int id = (uczniowieDataGrid.SelectedItem as Wycieczki).ID;
+            Wycieczki wycieczka = (from r in context.Wycieczkis where r.ID == id select r).SingleOrDefault();
+
+            context.Wycieczkis.Remove(wycieczka);
+            context.SaveChanges();
+            ordViewSource.View.Refresh();
+        }
+
+        private void Add_Uczen(object sender, RoutedEventArgs e)
+        {
+            int id = 0;
+            foreach (var u in context.Uczniowies)
+            {
+                id = u.ID;
+            }
+            id++;
+
+            Uczniowie uczen = new Uczniowie()
+            {
+                ID = id,
+                Imię = imieBox.Text,
+                Nazwisko = nazwiskoTextBox.Text,
+                KlasaID = int.Parse(klasaIDTextBox.Text),
+                PESEL = pESELTextBox.Text
+            };
+
+            context.Uczniowies.Add(uczen);
+            context.SaveChanges();
+            ordViewSource.View.Refresh();
+        }
+
+        private void Add_Przedmiot(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Add_Nauczyciel(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Add_Wycieczka(object sender, RoutedEventArgs e)
+        {
+
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

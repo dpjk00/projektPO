@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Pajunk\source\repos\ProjektWPF\ProjektWPF\App.xaml
-5769150270
+6-971300655
 2775383169
 221715850311
 18820685019
-MainWindow.xaml;Themes\MainLabelTheme.xaml;Themes\MenuButtonTheme.xaml;ViewStuff\View\Nauczyciele.xaml;ViewStuff\View\UczniowieView.xaml;
+MainWindow.xaml;Themes\ButtonTheme.xaml;Themes\MainLabelTheme.xaml;Themes\MenuButtonTheme.xaml;ViewStuff\View\Nauczyciele.xaml;ViewStuff\View\UczniowieView.xaml;
 
 True
 

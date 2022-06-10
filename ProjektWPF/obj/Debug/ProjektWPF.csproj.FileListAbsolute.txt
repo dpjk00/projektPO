@@ -27,3 +27,4 @@ C:\Users\Pajunk\source\repos\ProjektWPF\ProjektWPF\obj\Debug\GeneratedInternalTy
 C:\Users\Pajunk\source\repos\ProjektWPF\ProjektWPF\obj\Debug\ViewStuff\View\UczniowieView.baml
 C:\Users\Pajunk\source\repos\ProjektWPF\ProjektWPF\obj\Debug\ViewStuff\View\Nauczyciele.g.cs
 C:\Users\Pajunk\source\repos\ProjektWPF\ProjektWPF\obj\Debug\ViewStuff\View\Nauczyciele.baml
+C:\Users\Pajunk\source\repos\ProjektWPF\ProjektWPF\obj\Debug\Themes\ButtonTheme.baml
