@@ -19,15 +19,12 @@
     <Window.Resources>
         <CollectionViewSource x:Key="uczniowieViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Uczniowie}, CreateList=True}"/>
         <CollectionViewSource x:Key="klasyViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Klasy}, CreateList=True}"/>
-        <RoutedUICommand x:Key="FirstCommand" Text="First"/>
-        <RoutedUICommand x:Key="LastCommand" Text="Last"/>
-        <RoutedUICommand x:Key="NextCommand" Text="Next"/>
         <RoutedUICommand x:Key="UczniowieCommand" Text="Uczniowie"/>
         <RoutedUICommand x:Key="NauczycieleCommand" Text="Nauczyciele"/>
         <RoutedUICommand x:Key="PrzedmiotyCommand" Text="Przedmioty"/>
         <RoutedUICommand x:Key="WycieczkiCommand" Text="Wycieczki"/>
-        <RoutedUICommand x:Key="DeleteCustomerCommand" Text="Delete Customer"/>
-        <RoutedUICommand x:Key="DeleteOrderCommand" Text="Delete Order"/>
+        <RoutedUICommand x:Key="DeleteUczenCommand" Text="Delete Uczen"/>
+        <RoutedUICommand x:Key="DeleteCommand" Text="Delete"/>
         <RoutedUICommand x:Key="UpdateCommand" Text="Update"/>
         <RoutedUICommand x:Key="AddCommand" Text="Add"/>
         <RoutedUICommand x:Key="CancelCommand" Text="Cancel"/>
@@ -98,6 +95,7 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{StaticResource WycieczkiCommand}"/>
             </StackPanel>
+            
 
             <Grid Grid.Row="1"
                   Grid.Column="1"
@@ -115,7 +113,7 @@
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Delete" Command="{StaticResource DeleteOrderCommand}" CommandParameter="{Binding}"/>
+                                    <Button Content="Delete" Command="{StaticResource DeleteCommand}" CommandParameter="{Binding}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

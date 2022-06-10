@@ -42,6 +42,44 @@ namespace ProjektWPF
             custViewSource.Source = context.Uczniowies.Local;
         }
 
+        private void LastCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            custViewSource.View.MoveCurrentToLast();
+        }
+
+        private void PreviousCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            custViewSource.View.MoveCurrentToPrevious();
+        }
+
+        private void NextCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            custViewSource.View.MoveCurrentToNext();
+        }
+
+        private void FirstCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            custViewSource.View.MoveCurrentToFirst();
+        }
+
+        private void DeleteUczenCommandHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            // If existing window is visible, delete the customer and all their orders.  
+            // In a real application, you should add warnings and allow the user to cancel the operation.  
+            var cur = custViewSource.View.CurrentItem as Uczniowie;
+
+            var cust = (from c in context.Uczniowies
+                        where c.ID == cur.ID
+                        select c).FirstOrDefault();
+
+            if (cust != null)
+            {
+                context.Uczniowies.Remove(cust);
+            }
+            context.SaveChanges();
+            custViewSource.View.Refresh();
+        }
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
