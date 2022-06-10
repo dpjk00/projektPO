@@ -75,7 +75,7 @@
                         Visibility="Hidden"
                         x:Name="przedmiotyStackPanel">
                 <Label VerticalAlignment="Center" Foreground="WhiteSmoke" Grid.Row="0" Margin="40, 0, 0, 0" HorizontalAlignment="Left" Grid.Column="0" Content="Przedmiot:"/>
-                <TextBox x:Name="przedmiotTextBox" Style="{StaticResource MainLabelTheme}" HorizontalAlignment="Center" Margin="3" Grid.Row="1" Text="{Binding Przedmiot, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                <TextBox x:Name="przedmiotTextBox" Style="{StaticResource MainLabelTheme}" HorizontalAlignment="Center" Margin="3" Grid.Row="1" Text="" VerticalAlignment="Center" Width="120"/>
                 <Button Click="Add_Przedmiot" Style="{StaticResource ButtonTheme}" Content="Dodaj"></Button>
             </StackPanel>
             <StackPanel DataContext="{StaticResource nauczycieleViewSource}"

@@ -49,6 +49,7 @@ namespace ProjektWPF
 
         private void UczniowieCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
+            custViewSource = ((CollectionViewSource)(FindResource("uczniowieViewSource")));
             context.Uczniowies.Load();
             custViewSource.Source = context.Uczniowies.Local;
             uczniowieDataGrid.Visibility = Visibility.Visible;
@@ -63,6 +64,7 @@ namespace ProjektWPF
 
         private void NauczycieleCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
+            custViewSource = ((CollectionViewSource)(FindResource("nauczycieleViewSource")));
             context.Nauczycieles.Load();
             custViewSource.Source = context.Nauczycieles.Local;
             uczniowieDataGrid.Visibility = Visibility.Hidden;
@@ -77,6 +79,7 @@ namespace ProjektWPF
 
         private void WycieczkiCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
+            custViewSource = ((CollectionViewSource)(FindResource("wycieczkiViewSource")));
             context.Wycieczkis.Load();
             custViewSource.Source = context.Wycieczkis.Local;
             uczniowieDataGrid.Visibility = Visibility.Hidden;
@@ -91,6 +94,7 @@ namespace ProjektWPF
 
         private void PrzedmiotyCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
+            custViewSource = ((CollectionViewSource)(FindResource("przedmiotyViewSource")));
             context.Przedmioties.Load();
             custViewSource.Source = context.Przedmioties.Local;
             uczniowieDataGrid.Visibility = Visibility.Hidden;
@@ -192,7 +196,14 @@ namespace ProjektWPF
 
         private void Add_Przedmiot(object sender, RoutedEventArgs e)
         {
-
+            Przedmioty przedmiot = new Przedmioty()
+            {
+                Przedmiot = przedmiotTextBox.Text
+            };
+            
+            context.Przedmioties.Add(przedmiot);
+            context.SaveChanges();
+            ordViewSource.View.Refresh();
         }
 
         private void Add_Nauczyciel(object sender, RoutedEventArgs e)
